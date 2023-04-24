@@ -17,7 +17,7 @@ int main() {
 	A.print_vector();
 	B.print_vector();
 	C.print_vector();
-	if (A == C) {
+	if (A != C) {
 		std::cout << A[2] << std::endl;
 	}
 }

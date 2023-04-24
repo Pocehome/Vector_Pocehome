@@ -107,8 +107,8 @@ public:
 	}
 };
 
-template <class V1, class V2>
-bool operator==(Vector<V1> vector1, Vector<V2> vector2) {
+template <class T1, class T2>
+bool operator==(Vector<T1> vector1, Vector<T2> vector2) {
 	if (vector1.get_size() != vector2.get_size()) {
 		return false;
 	}
@@ -118,4 +118,17 @@ bool operator==(Vector<V1> vector1, Vector<V2> vector2) {
 		}
 	}
 	return true;
+}
+
+template <class T1, class T2>
+bool operator!=(Vector<T1> vector1, Vector<T2> vector2) {
+	if (vector1.get_size() != vector2.get_size()) {
+		return true;
+	}
+	for (size_t i = 0; i < vector1.get_size(); i++) {
+		if (vector1.get_coord(i) != vector2.get_coord(i)) {
+			return true;
+		}
+	}
+	return false;
 }
