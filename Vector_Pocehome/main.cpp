@@ -23,9 +23,9 @@ int main() {
 		++C;
 		B = D + 4;
 
-		//A.add_left_coord(6);
-		//A.set_size(8);
-		//A.add_right_coord(5);
+		D.add_left_coord(6);
+		D.set_size(8);
+		D.add_right_coord(5);
 
 		std::cout << "Vector A: " << A << std::endl;
 		std::cout << "Vector B: " << B << std::endl;

@@ -60,10 +60,22 @@ public:
 		}
 	}
 
-	T get_coord(size_t index) const {		// get coord
+	T& get_coord(size_t index) const {		// get coord
+		if (this->size <= index) {
+			throw std::out_of_range("Too big index");
+		}
+		else if (index < 0) {
+			throw std::out_of_range("Too small index");
+		}
 		return this->coords[index];
 	}
 	void set_coord(size_t index, T coord) {		// set cooord
+		if (this->size <= index) {
+			throw std::out_of_range("Too big index");
+		}
+		else if (index < 0) {
+			throw std::out_of_range("Too small index");
+		}
 		this->coords[index] = coord;
 	}
 
@@ -81,6 +93,12 @@ public:
 	}
 
 	T& operator[](size_t index) const {			// index operator
+		if (this->size <= index) {
+			throw std::out_of_range("Too big index");
+		}
+		else if (index < 0) {
+			throw std::out_of_range("Too small index");
+		}
 		return this->coords[index];
 	}
 	Vector<T>& operator=(const Vector<T>& vector) {			// assignment operator
