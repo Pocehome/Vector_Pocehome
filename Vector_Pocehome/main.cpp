@@ -18,7 +18,7 @@ int main() {
 
 		//std::cin >> D;
 		//double mult = C * A;
-		A += C;
+		A += ++C;
 		A++;
 		++C;
 		B = D + 4;
