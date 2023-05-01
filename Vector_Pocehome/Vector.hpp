@@ -293,31 +293,35 @@ double operator*(const Vector<T1>& vector1, const Vector<T2>& vector2) {		// ope
 
 // Vector += Vector
 template <class T1, class T2>
-void operator+=(Vector<T1>& vector1, const Vector<T2>& vector2) {		// operator+= (Vector<T1> += Vector<T2>)
+Vector<T1>& operator+=(Vector<T1>& vector1, const Vector<T2>& vector2) {		// operator+= (Vector<T1> += Vector<T2>)
 	if (vector1.get_size() != vector2.get_size()) {
 		throw std::out_of_range("Different vector sizes");
 	}
 	for (size_t i = 0; i < vector1.get_size(); i++) {
 		vector1[i] += vector2[i];
 	}
+	return vector1;
 }
 
 // Vector += scalar
 template <class T1, class T2>
-void operator+=(Vector<T1>& vector, const T2& n) {			// operator+= (Vector<T1> += T2)
+Vector<T1>& operator+=(Vector<T1>& vector, const T2& n) {			// operator+= (Vector<T1> += T2)
 	for (size_t i = 0; i < vector.get_size(); i++) {
 		vector[i] = vector[i] + n;
 	}
+	return vector;
 }
 
 // ++Vector
 template<class T>
-void operator++(Vector<T>& vector) {		// operator++ (Vector<T> += 1)
+Vector<T>& operator++(Vector<T>& vector) {		// operator++ (Vector<T> += 1)
 	vector += 1;
+	return vector;
 }
 
 // Vector++
 template<class T>
-void operator++(Vector<T>& vector, int n) {			// operator++ (Vector<T> += 1)
+Vector<T>& operator++(Vector<T>& vector, int) {			// operator++ (Vector<T> += 1)
 	vector += 1;
+	return vector;
 }
