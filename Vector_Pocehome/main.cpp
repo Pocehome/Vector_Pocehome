@@ -18,7 +18,7 @@ int main() {
 
 		//std::cin >> D;
 		//double mult = C * A;
-		A += ++C;
+		A += B;
 		A++;
 		++C;
 		B = D + 4;
@@ -32,9 +32,9 @@ int main() {
 		std::cout << "Vector C: " << C << std::endl;
 		std::cout << "Vector D: " << D << std::endl;
 
-		/*if (B == A) {
+		if (B != A) {
 			std::cout << A[2] << std::endl;
-		}*/
+		}
 	}
 	catch (const std::out_of_range& ex) {
 		std::cerr << "Exeption: " << ex.what();

@@ -101,15 +101,15 @@ public:
 		}
 		return this->coords[index];
 	}
-	Vector<T>& operator=(const Vector<T>& vector) {			// assignment operator
+	Vector<T>& operator=(const Vector<T>& vector) {			// assignment operator !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		this->size = vector.size;
-		if (vector.size != 0) {
+		if ((vector.size != 0) && (this != &vector)) {
 			this->coords = new T[vector.size];
 			for (size_t i = 0; i < vector.size; i++) {
 				this->coords[i] = vector[i];
 			}
 		}
-		else {
+		else if (this->size == vector.size) {
 			this->coords = nullptr;
 		}
 		return *this;
@@ -124,8 +124,9 @@ public:
 			}
 			out << vector[vector.size - 1] << ")";
 		}
-		else {;
-		out << "size = 0";
+		else {
+			;
+			out << "size = 0";
 		}
 		return out;
 	}
@@ -163,34 +164,24 @@ bool operator!=(Vector<T1> vector1, Vector<T2> vector2) {		// inequality operato
 	return false;
 }
 
-// Vector + scalar
-Vector<int> operator+(const Vector<int>& vector, const int& n) {			// operator+ (Vector<int> + int); return Vector<int>
-	Vector<int> res(vector.get_size());
+// Vector + scalar (scalar + vector)
+template <class T>
+Vector<T> operator+(const Vector<T>& vector, const T& n) {		// operator+ (Vector<T> + T); return Vector<T>
+	Vector<T> res(vector.get_size());
 	for (size_t i = 0; i < vector.get_size(); i++) {
 		res.set_coord(i, vector.get_coord(i) + n);
 	}
 	return res;
 }
-template <class T1, class T2>
-Vector<double> operator+(const Vector<T1>& vector, const T2& n) {		// operator+ (Vector<T1> + T2); return Vector<double>
-	Vector<double> res(vector.get_size());
-	for (size_t i = 0; i < vector.get_size(); i++) {
-		res.set_coord(i, vector.get_coord(i) + n);
-	}
-	return res;
+template <class T>
+Vector<T> operator+(const T& n, const Vector<T>& vector) {		// operator+ (T + Vector<T>); return Vector<T>
+	return vector + n;
 }
 
 // Vector - scalar
-Vector<int> operator-(const Vector<int>& vector, const int& n) {			// operator- (Vector<int> - int); return Vector<int>
-	Vector<int> res(vector.get_size());
-	for (size_t i = 0; i < vector.get_size(); i++) {
-		res.set_coord(i, vector.get_coord(i) - n);
-	}
-	return res;
-}
-template <class T1, class T2>
-Vector<double> operator-(const Vector<T1>& vector, const T2& n) {		// operator- (Vector<T1> - T2); return Vector<double>
-	Vector<double> res(vector.get_size());
+template <class T>
+Vector<T> operator-(const Vector<T>& vector, const T& n) {		// operator- (Vector<T> - T); return Vector<T>
+	Vector<T> res(vector.get_size());
 	for (size_t i = 0; i < vector.get_size(); i++) {
 		res.set_coord(i, vector.get_coord(i) - n);
 	}
@@ -198,33 +189,23 @@ Vector<double> operator-(const Vector<T1>& vector, const T2& n) {		// operator- 
 }
 
 // Vector * scalar (scalar * Vector)
-Vector<int> operator*(const Vector<int>& vector, const int& n) {		// operator* (Vector<int> * int); return Vector<int>
-	Vector<int> res(vector.get_size());
+template <class T>
+Vector<T> operator*(const Vector<T>& vector, const T& n) {		// operator* (Vector<T> * T); return Vector<T>
+	Vector<T> res(vector.get_size());
 	for (size_t i = 0; i < vector.get_size(); i++) {
 		res.set_coord(i, vector.get_coord(i) * n);
 	}
 	return res;
 }
-Vector<int> operator*(const int& n, const Vector<int>& vector) {		// operator* (int * Vector<int>); return Vector<int>
-	return vector * n;
-}
-template <class T1, class T2>
-Vector<double> operator*(const Vector<T1>& vector, const T2& n) {		// operator* (Vector<T1> * T2); return Vector<double>
-	Vector<double> res(vector.get_size());
-	for (size_t i = 0; i < vector.get_size(); i++) {
-		res.set_coord(i, vector.get_coord(i) * n);
-	}
-	return res;
-}
-template <class T1, class T2>
-Vector<double> operator*(const T1& n, const Vector<T2>& vector) {		// operator* (T1 * Vector<T2>); return Vector<double>
+template <class T>
+Vector<T> operator*(const T& n, const Vector<T>& vector) {		// operator* (T * Vector<T>); return Vector<double>
 	return vector * n;
 }
 
 // Vector / scalar
-template <class T1, class T2>
-Vector<double> operator/(const Vector<T1>& vector, const T2& n) {		// operator/ (Vector<T1> / T2); return Vector<double>
-	Vector<double> res(vector.get_size());
+template <class T>
+Vector<T> operator/(const Vector<T>& vector, const T& n) {		// operator/ (Vector<T> / T); return Vector<T>
+	Vector<T> res(vector.get_size());
 	for (size_t i = 0; i < vector.get_size(); i++) {
 		double vector_coord = vector.get_coord(i);
 		res.set_coord(i, vector_coord / n);
@@ -233,22 +214,12 @@ Vector<double> operator/(const Vector<T1>& vector, const T2& n) {		// operator/ 
 }
 
 // Vector + Vector
-Vector<int> operator+(const Vector<int>& vector1, const Vector<int>& vector2) {			// operator+ (Vector<int> + Vector<int>); return Vector<int>
+template <class T>
+Vector<T> operator+(const Vector<T>& vector1, const Vector<T>& vector2) {		// operator+ (Vector<T> + Vector<T>); return Vector<T>
 	if (vector1.get_size() != vector2.get_size()) {
 		throw std::out_of_range("Different vector sizes");
 	}
-	Vector<int> res(vector1.get_size());
-	for (size_t i = 0; i < vector1.get_size(); i++) {
-		res.set_coord(i, vector1.get_coord(i) + vector2.get_coord(i));
-	}
-	return res;
-}
-template <class T1, class T2>
-Vector<double> operator+(const Vector<T1>& vector1, const Vector<T2>& vector2) {		// operator+ (Vector<T1> + Vector<T2>); return Vector<double>
-	if (vector1.get_size() != vector2.get_size()) {
-		throw std::out_of_range("Different vector sizes");
-	}
-	Vector<double> res(vector1.get_size());
+	Vector<T> res(vector1.get_size());
 	for (size_t i = 0; i < vector1.get_size(); i++) {
 		res.set_coord(i, vector1.get_coord(i) + vector2.get_coord(i));
 	}
@@ -256,22 +227,12 @@ Vector<double> operator+(const Vector<T1>& vector1, const Vector<T2>& vector2) {
 }
 
 // Vector - Vector
-Vector<int> operator-(const Vector<int>& vector1, const Vector<int>& vector2) {			// operator- (Vector<int> - Vector<int>); return Vector<int>
+template <class T>
+Vector<T> operator-(const Vector<T>& vector1, const Vector<T>& vector2) {		// operator- (Vector<T> - Vector<T>); return Vector<T>
 	if (vector1.get_size() != vector2.get_size()) {
 		throw std::out_of_range("Different vector sizes");
 	}
-	Vector<int> res(vector1.get_size());
-	for (size_t i = 0; i < vector1.get_size(); i++) {
-		res.set_coord(i, vector1.get_coord(i) - vector2.get_coord(i));
-	}
-	return res;
-}
-template <class T1, class T2>
-Vector<double> operator-(const Vector<T1>& vector1, const Vector<T2>& vector2) {		// operator- (Vector<T1> - Vector<T2>); return Vector<double>
-	if (vector1.get_size() != vector2.get_size()) {
-		throw std::out_of_range("Different vector sizes");
-	}
-	Vector<double> res(vector1.get_size());
+	Vector<T> res(vector1.get_size());
 	for (size_t i = 0; i < vector1.get_size(); i++) {
 		res.set_coord(i, vector1.get_coord(i) - vector2.get_coord(i));
 	}
@@ -279,12 +240,12 @@ Vector<double> operator-(const Vector<T1>& vector1, const Vector<T2>& vector2) {
 }
 
 // Vector * Vector (scalar)
-template <class T1, class T2>
-double operator*(const Vector<T1>& vector1, const Vector<T2>& vector2) {		// operator* (Vector<T1> * Vector<T2>); double
+template <class T>
+T operator*(const Vector<T>& vector1, const Vector<T>& vector2) {		// operator* (Vector<T> * Vector<T>); return T
 	if (vector1.get_size() != vector2.get_size()) {
 		throw std::out_of_range("Different vector sizes");
 	}
-	double res = 0;
+	T res = 0;
 	for (size_t i = 0; i < vector1.get_size(); i++) {
 		res += vector1.get_coord(i) * vector2.get_coord(i);
 	}
@@ -292,8 +253,8 @@ double operator*(const Vector<T1>& vector1, const Vector<T2>& vector2) {		// ope
 }
 
 // Vector += Vector
-template <class T1, class T2>
-Vector<T1>& operator+=(Vector<T1>& vector1, const Vector<T2>& vector2) {		// operator+= (Vector<T1> += Vector<T2>)
+template <class T>
+Vector<T>& operator+=(Vector<T>& vector1, const Vector<T>& vector2) {		// operator+= (Vector<T> += Vector<T>); return Vector<T>
 	if (vector1.get_size() != vector2.get_size()) {
 		throw std::out_of_range("Different vector sizes");
 	}
@@ -304,8 +265,8 @@ Vector<T1>& operator+=(Vector<T1>& vector1, const Vector<T2>& vector2) {		// ope
 }
 
 // Vector += scalar
-template <class T1, class T2>
-Vector<T1>& operator+=(Vector<T1>& vector, const T2& n) {			// operator+= (Vector<T1> += T2)
+template <class T>
+Vector<T>& operator+=(Vector<T>& vector, const T& n) {			// operator+= (Vector<T> += T); return Vector<T>
 	for (size_t i = 0; i < vector.get_size(); i++) {
 		vector[i] = vector[i] + n;
 	}
@@ -315,7 +276,8 @@ Vector<T1>& operator+=(Vector<T1>& vector, const T2& n) {			// operator+= (Vecto
 // ++Vector
 template<class T>
 Vector<T>& operator++(Vector<T>& vector) {		// operator++ (Vector<T> += 1)
-	vector += 1;
+	T temp = 1;
+	vector += temp;
 	return vector;
 }
 
