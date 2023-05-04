@@ -1,5 +1,5 @@
 #pragma once
-#include <iostream>
+#include "Exception.hpp"
 
 template <class T>
 class Vector {
@@ -62,19 +62,19 @@ public:
 
 	T& get_coord(size_t index) const {		// get coord
 		if (this->size <= index) {
-			throw std::out_of_range("Too big index");
+			throw Exception(__FILE__, __FUNCTION__, __LINE__, "Out of range: too big index");
 		}
 		else if (index < 0) {
-			throw std::out_of_range("Too small index");
+			throw Exception(__FILE__, __FUNCTION__, __LINE__, "Out of range: too small index");
 		}
 		return this->coords[index];
 	}
 	void set_coord(size_t index, T coord) {		// set cooord
 		if (this->size <= index) {
-			throw std::out_of_range("Too big index");
+			throw Exception(__FILE__, __FUNCTION__, __LINE__, "Out of range: too big index");
 		}
 		else if (index < 0) {
-			throw std::out_of_range("Too small index");
+			throw Exception(__FILE__, __FUNCTION__, __LINE__, "Out of range: too small index");
 		}
 		this->coords[index] = coord;
 	}
@@ -94,10 +94,10 @@ public:
 
 	T& operator[](size_t index) const {			// index operator
 		if (this->size <= index) {
-			throw std::out_of_range("Too big index");
+			throw Exception(__FILE__, __FUNCTION__, __LINE__, "Out of range: too big index");
 		}
 		else if (index < 0) {
-			throw std::out_of_range("Too small index");
+			throw Exception(__FILE__, __FUNCTION__, __LINE__, "Out of range: too small index");
 		}
 		return this->coords[index];
 	}
@@ -217,7 +217,7 @@ Vector<T> operator/(const Vector<T>& vector, const T& n) {		// operator/ (Vector
 template <class T>
 Vector<T> operator+(const Vector<T>& vector1, const Vector<T>& vector2) {		// operator+ (Vector<T> + Vector<T>); return Vector<T>
 	if (vector1.get_size() != vector2.get_size()) {
-		throw std::out_of_range("Different vector sizes");
+		throw Exception(__FILE__, __FUNCTION__, __LINE__, "Different vector sizes");
 	}
 	Vector<T> res(vector1.get_size());
 	for (size_t i = 0; i < vector1.get_size(); i++) {
@@ -230,7 +230,7 @@ Vector<T> operator+(const Vector<T>& vector1, const Vector<T>& vector2) {		// op
 template <class T>
 Vector<T> operator-(const Vector<T>& vector1, const Vector<T>& vector2) {		// operator- (Vector<T> - Vector<T>); return Vector<T>
 	if (vector1.get_size() != vector2.get_size()) {
-		throw std::out_of_range("Different vector sizes");
+		throw Exception(__FILE__, __FUNCTION__, __LINE__, "Different vector sizes");
 	}
 	Vector<T> res(vector1.get_size());
 	for (size_t i = 0; i < vector1.get_size(); i++) {
@@ -243,7 +243,7 @@ Vector<T> operator-(const Vector<T>& vector1, const Vector<T>& vector2) {		// op
 template <class T>
 T operator*(const Vector<T>& vector1, const Vector<T>& vector2) {		// operator* (Vector<T> * Vector<T>); return T
 	if (vector1.get_size() != vector2.get_size()) {
-		throw std::out_of_range("Different vector sizes");
+		throw Exception(__FILE__, __FUNCTION__, __LINE__, "Different vector sizes");
 	}
 	T res = 0;
 	for (size_t i = 0; i < vector1.get_size(); i++) {
@@ -256,7 +256,7 @@ T operator*(const Vector<T>& vector1, const Vector<T>& vector2) {		// operator* 
 template <class T>
 Vector<T>& operator+=(Vector<T>& vector1, const Vector<T>& vector2) {		// operator+= (Vector<T> += Vector<T>); return Vector<T>
 	if (vector1.get_size() != vector2.get_size()) {
-		throw std::out_of_range("Different vector sizes");
+		throw Exception(__FILE__, __FUNCTION__, __LINE__, "Different vector sizes");
 	}
 	for (size_t i = 0; i < vector1.get_size(); i++) {
 		vector1[i] += vector2[i];
