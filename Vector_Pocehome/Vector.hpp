@@ -101,15 +101,18 @@ public:
 		}
 		return this->coords[index];
 	}
-	Vector<T>& operator=(const Vector<T>& vector) {			// assignment operator !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		this->size = vector.size;
+	Vector<T>& operator=(const Vector<T>& vector) {			// assignment operator
 		if ((vector.size != 0) && (this != &vector)) {
+			this->size = vector.size;
+			delete[] this->coords;
 			this->coords = new T[vector.size];
 			for (size_t i = 0; i < vector.size; i++) {
 				this->coords[i] = vector[i];
 			}
 		}
-		else if (this->size == vector.size) {
+		else if (vector.size == 0) {
+			this->size = vector.size;
+			delete[] this->coords;
 			this->coords = nullptr;
 		}
 		return *this;
